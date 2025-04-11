@@ -1,1 +1,0 @@
-- Comentar o formato delta lake
