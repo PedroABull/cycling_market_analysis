@@ -78,15 +78,15 @@ O modelo de dados definido para o problema foi o **SnowFlake**. Essa escolha se 
 
 O primeiro passo foi desenvolver a modelagem conceitual dos dados definindo a dinâmica de relacionamento das diferentes informações contidas na base de dados original. Para esse caso em específico, as informações de clientes que realizaram compra encontram-se agrupadas, ou seja, a granularidade máxima desses atributos é dada como grupos de clientes por idade e por sexo. Sendo assim, uma cidade pode conter 1 ou n grupos de clientes, assim como um grupo de clientes pode estar em uma ou n cidades. Por esse motivo, foi adotada uma abordagem alternativa ao modelo Snowflake tradicional, com a introdução da tabela intermediária **DimRegion_Customers**, que permite manter a consistência dos relacionamentos e garantir flexibilidade para análises futuras.
 
-![boxplot](images/cv_results.png)
+![modelo_conceitual](images/modelo_conceitual.png)
 
 O segundo passo foi eliminar os relacionamentos **n:n** do modelo, incluindo a tabela fato de vendas e uma tabela de relacionamento entre as entidades de Região e Grupo_Cliente, conforme descrito na etapa anterior.
 
-![boxplot](images/cv_results.png)
+![eliminando_nxn](images/eliminando_nxn.png)
 
 O terceiro e último passo foi a modelagem lógica das entidades e relacionamentos, onde foram definidas quais as colunas devem estar contidas em cada tabela e quais são as chaves primárias e extrangeiras para cruzar as informações.
 
-![boxplot](images/cv_results.png)
+![modelo_logico](images/modelo_logico.png)
 
 Por fim, foram definidas as seguintas tabelas para a camada gold do Data Warehouse:
   - **FactSales**: Tabela fato de vendas 
@@ -95,43 +95,55 @@ Por fim, foram definidas as seguintas tabelas para a camada gold do Data Warehou
   - **DimRegion**: Tabela dimensão de regiões de venda
   - **DimRegion_Customer**: Tabela contendo todas as combinações de ID_Region e ID_Customer, chaves primárias das tabelas **DimRegion** e **DimCustomers**, respectivamente.
 
-# Modelo Proposto e resultados
+## Carga de dados e ETL
 
-A partir de todas as análises realizadas até aqui, foram definidos os seguintes modelos para o problema:
+A etapa de Carga compõe a carga dos dados para o Data Warehouse e o processo de ETL (Extract, Transform, Load), sendo responsável por importar, tratar e organizar os dados da base bruta, estruturando-os de maneira adequada para análises. O processo foi dividido em três camadas principais, seguindo a arquitetura em camadas (bronze, silver e gold)
 
--  Linear Regression
--  Regressão L1(Regularização Lasso)
--  Regressão L2(Regularização Ridge)
--  Decision Tree
--  KNN
--  SVR
+**Camada bronze**: o arquivo original da fonte de dados foi carregado diretamente para o ambiente do Databricks usando PySpark. O conteúdo foi lido como um DataFrame e salvo no formato Delta Lake para garantir confiabilidade nas transações e uma melhor performance das consultas.
 
-Como métricas para avaliação de performance, foram escolhidas:
+**Camada silver**: tratamento, limpeza, padronização e validação da qualidade dos dados presentes na camada bronze. Abaixo estão as validações de Data Quality que foram aplicadas nessa camada.
 
-- R²: Para avaliar o quanto cada modelo se ajusta aos dados disponíveis. Essa métrica foi escolhida com o objetivo de dar suporte às análises.
+- Compatibilidade dos tipos de dados por coluna
+- Verificação de Duplicatas
+- Verificação de Nulos
+- Renomeação de colunas
 
-- RMSE: Para avaliar, em escala, qual a magnitude média do erro de previsão de cada modelo. Essa é a métrica principal para seleção do modelo justamente pelo fato de fornecer uma referência média de quanto o modelo está errando em relação ao valor real.
+**Camada gold**: nessa camada foram salvos os dados consolidados, agregados e modelados para consumo analítico, como já detalhado no tópico **Modelagem de Dados**.
 
-Os resultados obtidos para os primeiros testes estão detalhados no gráfico abaixo:
+## Análise
+### *Data Quality*
+Considerando que os atributos de todas as tabelas desse modelo derivam da tabela original do projeto, a discussão de data quality será feita com base nas colunas da tabela original.
 
-![boxplot](images/cv_results.png)
+#### 1. Valores Nulos: 
+A fonte de dados utilizada para esse projeto já estava relativamente limpa e estruturada, de modo que não existiam valores nulos em nenhuma das colunas **(etapa detalhada na camada silver)**.
 
-A princípio, boa parte dos modelos performou relativamente bem nos dados de treino, com exceção da Regressão L1.
+#### 2. Valores Duplicados
+Em relação a valores duplicados, foram encontrados 1000 registros duplicados na base de dados e a trativa escolhida foi simplesmente excluir a duplicidade de dados **(etapa detalhada na camada silver)** para não haver influência nas análises.
 
-Em seguida, foi realizada uma etapa de otimização de hiperparÂmetros com o GridSearch para extrair o melhor de cada um dos modelos propostos. O resultado final segue detalhado abaixo:
+#### 3. Consistência
+- A coluna **Sale_Date** está formatada como data (yyyy-MM-dd) e suas derivadas Day, Month_Name e Year apresentam-se no formato esperado
 
-![results](images/results.png)
+- As variáveis categóricas Customer_Gender, Age_Group, Product, Country, State, Product_Category, Sub_Category etc. não contém erros de digitação ou inconsistências (ex: "F" vs "Female")
 
-Resultados alcançados:
+- Variáveis numéricas como Order_Quantity, Unit_Cost, Unit_Price, Profit, Cost e Revenue não apresentam valores negativos ou incoerentes
 
-1. É perceptível que a dispersão dos pontos do modelo SVR, em relação à reta de referência, é considerávelmente menor do que os demais modelos.
+### Respondendo às perguntas objetivo
+As consultas SQL detalhadas com valores e tabelas encontram-se no arquivo [Notebook de Análise de Dados](notebooks/MVP%20Engenharia%20de%20Dados%20-%20PedroABull.ipynb)
 
-2. Com o maior volume de dados disponíveis e, também, com a otimização dos hiperparâmetros, a regressão L1 se aproximou bastante da regressão L2, tendo o RMSE reduzido em mais de 50%, chegando a menos de 3 mpg na fase final de testes.
+## Conclusão
 
-3. Antes da etapa de otimização, o algotimo KNN era o que estava performando melhor, com um RMSE de 2.30 mpg. Após a otimização, o algoritmo SVR melhorou sua performance consideravelmente, apesar de demorar o dobro do tempo de treinamento, em média, em relação ao KNN para processar os dados, como mostra a tabela com os resultados da validação cruzada. Ainda assim, todos os modelos processaram os dados com bastante celeridade.
+A partir da definição inicial dos objetivos, este projeto teve como foco analisar o desempenho de vendas de uma empresa do setor de ciclismo e entender o comportamento de compra dos clientes, com o objetivo de identificar oportunidades de crescimento e melhorias estratégicas no portfólio. Como hipótese, considerou-se que as vendas da empresa espelham o comportamento do mercado total do setor.
 
-# Conclusão
+Com base nos dados históricos de vendas, estruturados em um modelo de dados Snowflake, serão detalhadas a seguir as respostas obtidas para as perguntas estabelecidas na fase de definição do objetivo
 
-Ao final, o projeto alcançou resultados satisfatórios em relação aos tempos de processamento dos dados e, principalmente, para os resultados alcançados.
+1. Quais tipos de produtos e/ou categoria movimentam mais o mercado?
+A análise revelou que, embora produtos das categorias Acessórios e Roupas liderem em volume de vendas, são as Bicicletas que concentram o maior faturamento. Essa distinção entre volume e receita mostra que diferentes categorias cumprem papéis distintos na estratégia comercial: enquanto roupas e acessórios promovem recorrência de compra e fidelização, as bicicletas são peças-chave no resultado financeiro geral.
 
-O modelo final escolhido para a resolução do problema foi o modelo SVR, o qual teve uma performance cerca de 8% melhor do que o segundo melhor modelo testado. O modelo SVR foi tanto o que se ajustou melhor aos dados de maneira geral, com um R² de 0.93, quanto o que teve o menor valor de erro, com um RMSE de 1.97 mpg.
+2. Como o comportamento de compra varia entre diferentes perfis de clientes?
+Os dados demonstram uma tendência de equilíbrio entre os gêneros no que diz respeito à compra de bicicletas, com volumes e faturamento similares entre homens e mulheres. Esse comportamento quebra paradigmas do setor e indica uma oportunidade estratégica de expansão no portfólio feminino, o qual ainda é pouco explorado no mercado como um todo.
+
+3. Em quais tipos de produtos a empresa deve investir?
+Apesar de as bicicletas representarem a maior fatia do faturamento total, sua margem percentual de lucro é relativamente baixa. Em contraste, categorias como vestuário e acessórios apresentam margens maiores e ciclo de recompra mais curto. Assim, a análise mostra que o ideal seria que a empresa equilibre seus investimentos no desenvolvimento de novos projetos, valorizando produtos de alta margem e frequência de compra, não apenas os de alto ticket.
+
+4. Quais países representam os maiores mercados para a empresa?
+Embora os maiores volumes de faturamento estejam atualmente concentrados em países como Estados Unidos e Austrália, há uma sub-representação na Europa, que é o principal mercado global do ciclismo. Isso aponta para uma grande oportunidade de expansão no continente europeu.
