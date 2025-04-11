@@ -17,7 +17,7 @@ Este projeto foi desenvolvido como trabalho final do módulo de Engenharia de Da
   <a href="https://www.linkedin.com/in/pedro-bull-0363ba1a1/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
 </p>
 
-## Objetivos
+## 1. Objetivos
 
 Este projeto tem como objetivo simular uma análise de dados de vendas de uma empresa fictícia do setor de ciclismo, aplicando conceitos de Engenharia de Dados, Processos de ETL e Análises de dados com SQL e Python através da plataforma de dados unificada na nuvem Databricks. A partir da construção de um data warehouse com múltiplas camadas (bronze, silver e gold), buscou-se responder a perguntas estratégicas sobre o comportamento de compra dos clientes, desempenho de produtos, lucratividade por categoria e oportunidades de expansão de mercado.
 
@@ -27,7 +27,7 @@ Perguntas a serem respondidas:
   - Em quais tipos de produtos a empresa deve investir?
   - Quais países representam os maiores mercados para a empresa?
 
-## Estrutura do repositório
+## 2. Estrutura do repositório
 
 O repositório está estruturado da seguinte forma:
 
@@ -43,7 +43,7 @@ O repositório está estruturado da seguinte forma:
 - Na pasta `notebooks` está o notebooks com o desenvolvimento do projeto. Em detalhes, temos:
 - Na pasta `reports` estão os relatórios gerados durante o projeto, como catálogo de dados e diagramas de modelagem de dados.
 
-## Detalhes do dataset utilizado
+## 3. Detalhes do dataset utilizado
 
 ### Catálogo de Dados
 
@@ -72,7 +72,7 @@ O repositório está estruturado da seguinte forma:
 | `ID_Region_Customer` | BIGINT              | Identificador único da combinação região-cliente                         | Autoincremento, valor único                                   |
 
 
-## Modelagem de dados
+## 4. Modelagem de dados
 
 O modelo de dados definido para o problema foi o **SnowFlake**. Essa escolha se deu principalmente para evitar a repetição desnecessária de dados e manter a integridade, facilidade de manutenção e a escalabilidade, pensando que esses dados tendem a crescer com o tempo, tanto em dados históricos mas também em número de produtos e regiões.
 
@@ -95,7 +95,7 @@ Por fim, foram definidas as seguintas tabelas para a camada gold do Data Warehou
   - **DimRegion**: Tabela dimensão de regiões de venda
   - **DimRegion_Customer**: Tabela contendo todas as combinações de ID_Region e ID_Customer, chaves primárias das tabelas **DimRegion** e **DimCustomers**, respectivamente.
 
-## Carga de dados e ETL
+## 5. Carga de dados e ETL
 
 A etapa de Carga compõe a carga dos dados para o Data Warehouse e o processo de ETL (Extract, Transform, Load), sendo responsável por importar, tratar e organizar os dados da base bruta, estruturando-os de maneira adequada para análises. O processo foi dividido em três camadas principais, seguindo a arquitetura em camadas (bronze, silver e gold)
 
@@ -110,7 +110,7 @@ A etapa de Carga compõe a carga dos dados para o Data Warehouse e o processo de
 
 **Camada gold**: nessa camada foram salvos os dados consolidados, agregados e modelados para consumo analítico, como já detalhado no tópico **Modelagem de Dados**.
 
-## Análise
+## 6. Análise
 ### *Data Quality*
 Considerando que os atributos de todas as tabelas desse modelo derivam da tabela original do projeto, a discussão de data quality será feita com base nas colunas da tabela original.
 
@@ -130,7 +130,7 @@ Em relação a valores duplicados, foram encontrados 1000 registros duplicados n
 ### Respondendo às perguntas objetivo
 As consultas SQL detalhadas com valores e tabelas encontram-se no arquivo [Notebook de Análise de Dados](notebooks/MVP%20Engenharia%20de%20Dados%20-%20PedroABull.ipynb)
 
-## Conclusão
+## 7. Conclusão
 
 A partir da definição inicial dos objetivos, este projeto teve como foco analisar o desempenho de vendas de uma empresa do setor de ciclismo e entender o comportamento de compra dos clientes, com o objetivo de identificar oportunidades de crescimento e melhorias estratégicas no portfólio. Como hipótese, considerou-se que as vendas da empresa espelham o comportamento do mercado total do setor.
 
