@@ -1,7 +1,7 @@
 [![author](https://img.shields.io/badge/Author-PedroBull-red.svg)](https://www.linkedin.com/in/pedro-bull-0363ba1a1/)
 [![](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
 
-# Inteligência Comercial no Mercado de Ciclismo: Análise de Vendas e Clientes
+# Engenharia de Dados Aplicada: Vendas e Perfil de Clientes no Mercado de Ciclismo
 
 Este projeto foi desenvolvido como trabalho final do módulo de Engenharia de Dados da Pós-graduação em Data Science e Advanced Analytics da PUC-RJ.
 
@@ -35,13 +35,11 @@ O repositório está estruturado da seguinte forma:
 ├── data
 ├── images
 ├── notebooks
-├── reports
 ```
 
 - Na pasta `data` a base de dados utilizada no projeto, a qual foi carregada no Databricks através do DBFS(Databricks FIle System)
 - Na pasta `images` estão as imagens utilizadas neste README.
 - Na pasta `notebooks` está o notebooks com o desenvolvimento do projeto. Em detalhes, temos:
-- Na pasta `reports` estão os relatórios gerados durante o projeto, como catálogo de dados e diagramas de modelagem de dados.
 
 ## 3. Detalhes do dataset utilizado
 
@@ -62,12 +60,12 @@ Para o catálogo de dados, foram consideradas todos os atributos envolvidos no m
 | `Product_Category`   | DimProducts                                   | STRING              | Categoria do produto vendido                                             | "Bikes", "Clothing", "Accessories"                            |
 | `Sub_Category`       | DimProducts                                   | STRING              | Subcategoria do produto                                                  | Ex: "Mountain Bikes", "Socks", "Helmets"                      |
 | `Product`            | DimProducts                                   | STRING              | Nome do produto                                                          | Nome único por item vendido                                   |
-| `Order_Quantity`     | Fact_Sales                                    | INT                 | Quantidade de unidades vendidas                                          | ≥ 1 (quantidade positiva e plausível)                         |
-| `Unit_Cost`          | Fact_Sales                                    | FLOAT / DECIMAL     | Custo unitário do produto                                                | > 0                                                           |
-| `Unit_Price`         | Fact_Sales                                    | FLOAT / DECIMAL     | Preço de venda unitário                                                  | > 0                                                           |
-| `Profit`             | Fact_Sales                                    | FLOAT / DECIMAL     | Lucro total da venda                                                     | Pode ser positivo ou negativo                                 |
-| `Cost`               | Fact_Sales                                    | FLOAT / DECIMAL     | Custo total da venda (`Unit_Cost` * `Order_Quantity`)                    | > 0                                                           |
-| `Revenue`            | Fact_Sales                                    | FLOAT / DECIMAL     | Receita total da venda (`Unit_Price` * `Order_Quantity`)                 | ≥ 0                                                           |
+| `Order_Quantity`     | Fact_Sales                                    | INT                 | Quantidade de unidades vendidas                                          | > 0                                                           |
+| `Unit_Cost`          | Fact_Sales                                    | FLOAT               | Custo unitário do produto                                                | > 0                                                           |
+| `Unit_Price`         | Fact_Sales                                    | FLOAT               | Preço de venda unitário                                                  | > 0                                                           |
+| `Profit`             | Fact_Sales                                    | FLOAT               | Lucro total da venda                                                     | Pode ser positivo ou negativo                                 |
+| `Cost`               | Fact_Sales                                    | FLOAT               | Custo total da vendas                                                    | > 0                                                           |
+| `Revenue`            | Fact_Sales                                    | FLOAT               | Receita total da venda                                                   | > 0                                                           |
 | `ID_Product`         | Fact_Sales, DimProducts                       | BIGINT              | Identificador único do produto (chave primária em DimProducts)           | Autoincremento, valor único                                   |
 | `ID_Customer`        | Fact_Sales, DimCustomers, DimRegion_Customers | BIGINT              | Identificador único do cliente (chave primária em DimCustomers)          | Autoincremento, valor único                                   |
 | `ID_Region`          | DimCustomer, DimRegion_Customers              | BIGINT              | Identificador único da região (chave primária em DimRegion)              | Autoincremento, valor único                                   |
@@ -115,9 +113,9 @@ Em relação a valores duplicados, foram encontrados 1000 registros duplicados n
 #### 3. Consistência
 - A coluna **Sale_Date** está formatada como data (yyyy-MM-dd) e suas derivadas Day, Month_Name e Year apresentam-se no formato esperado
 
-- As variáveis categóricas Customer_Gender, Age_Group, Product, Country, State, Product_Category, Sub_Category etc. não contém erros de digitação ou inconsistências (ex: "F" vs "Female")
+- As variáveis categóricas **Customer_Gender**, **Age_Group**, **Product**, **Country**, **State**, **Product_Category**, **Sub_Category** não contém erros de digitação ou inconsistências (ex: "F" vs "Female")
 
-- Variáveis numéricas como Order_Quantity, Unit_Cost, Unit_Price, Profit, Cost e Revenue não apresentam valores negativos ou incoerentes
+- Variáveis numéricas como **Order_Quantity**, **Unit_Cost**, **Unit_Price**, **Profit**, **Cost** e **Revenue** não apresentam valores negativos ou incoerentes
 
 ### Respondendo às perguntas objetivo
 As consultas SQL detalhadas com valores e tabelas encontram-se no arquivo [Notebook de Análise de Dados](notebooks/MVP%20Engenharia%20de%20Dados%20-%20PedroABull.ipynb)
