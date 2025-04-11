@@ -130,11 +130,13 @@ Em relação a valores duplicados, foram encontrados 1000 registros duplicados n
 ### Respondendo às perguntas objetivo
 As consultas SQL detalhadas com valores e tabelas encontram-se no arquivo [Notebook de Análise de Dados](notebooks/MVP%20Engenharia%20de%20Dados%20-%20PedroABull.ipynb)
 
+Uma discussão geral sobre as respostas e conclusões alcançadas no projeto será feita na etapa a seguir.
+
 ## 7. Conclusão
 
 A partir da definição inicial dos objetivos, este projeto teve como foco analisar o desempenho de vendas de uma empresa do setor de ciclismo e entender o comportamento de compra dos clientes, com o objetivo de identificar oportunidades de crescimento e melhorias estratégicas no portfólio. Como hipótese, considerou-se que as vendas da empresa espelham o comportamento do mercado total do setor.
 
-Com base nos dados históricos de vendas, estruturados em um modelo de dados Snowflake, serão detalhadas a seguir as respostas obtidas para as perguntas estabelecidas na fase de definição do objetivo
+Com base nos dados históricos de vendas, estruturados em um modelo de dados Snowflake, serão detalhadas a seguir as respostas obtidas para as perguntas estabelecidas na fase de definição do objetivo.
 
 1. Quais tipos de produtos e/ou categoria movimentam mais o mercado?
 A análise revelou que, embora produtos das categorias Acessórios e Roupas liderem em volume de vendas, são as Bicicletas que concentram o maior faturamento. Essa distinção entre volume e receita mostra que diferentes categorias cumprem papéis distintos na estratégia comercial: enquanto roupas e acessórios promovem recorrência de compra e fidelização, as bicicletas são peças-chave no resultado financeiro geral.
