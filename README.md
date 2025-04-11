@@ -87,7 +87,7 @@ O segundo passo foi eliminar os relacionamentos **n:n** do modelo, incluindo a t
 
 O terceiro e último passo foi a modelagem lógica das entidades e relacionamentos, onde foram definidas quais as colunas devem estar contidas em cada tabela e quais são as chaves primárias e extrangeiras para cruzar as informações.
 
-![modelo_logico](images/modelo_logico.png)
+![modelo_logico](images/modelo_logicov2.png)
 
 Por fim, foram definidas as seguintas tabelas para a camada gold do Data Warehouse:
   - **FactSales**: Tabela fato de vendas 
