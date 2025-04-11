@@ -30,6 +30,43 @@ O repositório está estruturado da seguinte forma:
 ├── reports
 ```
 
+
+%md
+### Catálogo de Dados
+
+| Coluna               | Tipo de Dado        | Descrição                                                                | Valores/Intervalos Esperados                                  |
+|----------------------|---------------------|--------------------------------------------------------------------------|---------------------------------------------------------------|
+| `Sale_Date`          | DATE (yyyy-MM-dd)   | Data completa da venda                                                   | Dentro do intervalo de anos válidos; sem datas futuras        |
+| `Day`                | INT                 | Dia do mês em que a venda ocorreu                                        | 1 a 31                                                        |
+| `Month_Name`         | STRING              | Nome do mês da venda                                                     | "January" a "December"                                        |
+| `Year`               | INT                 | Ano da venda                                                             | Ex: 2011 a 2016                                               |
+| `Customer_Age`       | INT                 | Idade do cliente no momento da compra                                    | 10 a 100 (valores fora disso podem indicar erro)              |
+| `Customer_Gender`    | STRING              | Gênero do cliente                                                        | "M" para homens e "F" para mulheres                           |
+| `Country`            | STRING              | País onde a venda foi realizada                                          | Lista limitada (ex: "United States", "France", "Germany"...)  |
+| `State`              | STRING              | Estado ou província da venda                                             | Compatível com o país correspondente                          |
+| `Product_Category`   | STRING              | Categoria do produto vendido                                             | "Bikes", "Clothing", "Accessories"                            |
+| `Sub_Category`       | STRING              | Subcategoria do produto                                                  | Ex: "Mountain Bikes", "Socks", "Helmets"                      |
+| `Product`            | STRING              | Nome do produto                                                          | Nome único por item vendido                                   |
+| `Order_Quantity`     | INT                 | Quantidade de unidades vendidas                                          | ≥ 1 (quantidade positiva e plausível)                         |
+| `Unit_Cost`          | FLOAT / DECIMAL     | Custo unitário do produto                                                | > 0                                                           |
+| `Unit_Price`         | FLOAT / DECIMAL     | Preço de venda unitário                                                  | > 0                                                           |
+| `Profit`             | FLOAT / DECIMAL     | Lucro total da venda                                                     | Pode ser positivo ou negativo                                 |
+| `Cost`               | FLOAT / DECIMAL     | Custo total da venda (`Unit_Cost` * `Order_Quantity`)                    | > 0                                                           |
+| `Revenue`            | FLOAT / DECIMAL     | Receita total da venda (`Unit_Price` * `Order_Quantity`)                 | ≥ 0                                                           |
+| `ID_Product`         | BIGINT              | Identificador único do produto (chave primária em DimProducts)           | Autoincremento, valor único                                   |
+| `ID_Customer`        | BIGINT              | Identificador único do cliente (chave primária em DimCustomers)          | Autoincremento, valor único                                   |
+| `ID_Region`          | BIGINT              | Identificador único da região (chave primária em DimRegion)              | Autoincremento, valor único                                   |
+| `ID_Region_Customer` | BIGINT              | Identificador único da combinação região-cliente                         | Autoincremento, valor único                                   |
+
+
+
+
+
+
+
+
+
+
 - Na pasta `data` estão os dados utilizados no projeto. A base de dados original é o arquivo `auto-mpg.csv`, sendo que os demais datasets foram gerados durante o projeto e salvos na pasta para fins de organização e versionamento.
 - Na pasta `images` estão as imagens utilizadas neste README.
 - Na pasta `notebooks` estão os notebooks com o desenvolvimento do projeto. Em detalhes, temos:
