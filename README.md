@@ -8,14 +8,14 @@ Este projeto foi desenvolvido como trabalho final do módulo de Engenharia de Da
 <p align="center">
   <img src="images/cover_bikeshop.png" alt="cover_img" width="900"/>
 </p>
-
 <p align="center">
   <strong>Link original para o dataset: https://www.kaggle.com/datasets/sadiqshah/bike-sales-in-europe</strong>
 </p>
 
-<p align="center"> 
-  <a href="https://www.linkedin.com/in/pedro-bull-0363ba1a1/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
+<p align="center">
+  <strong>Link para acessar o notebook online: https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/2766828811631733/3132399035759674/6919165123101387/latest.html
 </p>
+
 
 ## 1. Objetivos
 
