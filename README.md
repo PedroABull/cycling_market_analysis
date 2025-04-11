@@ -6,7 +6,7 @@
 Este projeto foi desenvolvido como trabalho final do módulo de Engenharia de Dados da Pós-graduação em Data Science e Advanced Analytics da PUC-RJ.
 
 <p align="center">
-  <img src="images/wallpaper.png" alt="cover_img" width="900"/>
+  <img src="images/cover_bikeshop.png" alt="cover_img" width="900"/>
 </p>
 
 <p align="center">
