@@ -45,36 +45,35 @@ O repositório está estruturado da seguinte forma:
 
 ## 3. Detalhes do dataset utilizado
 
-Para o catálogo de dados, foram consideradas todos os atributos envolvidos no modelo. A coluna "Tabela" indica a qual tabela o atributo pertence
+Para o catálogo de dados, foram consideradas todos os atributos envolvidos no modelo. A coluna "Tabela" indica a qual tabela o atributo pertence na camada gold. Caso a coluna tenha sido excluida no processo de criação de tabelas da camada gold, será atribuído "-".
 
 ### Catálogo de Dados
 
-| Coluna               | Tabela               | Tipo de Dado        | Descrição                                                                | Valores/Intervalos Esperados                                  |
-|----------------------|----------------------|---------------------|--------------------------------------------------------------------------|---------------------------------------------------------------|
-| `Sale_Date`          | Fact_Sales           | DATE (yyyy-MM-dd)   | Data completa da venda                                                   | Dentro do intervalo de anos válidos; sem datas futuras        |
-| `Day`                | Fact_Sales           | INT                 | Dia do mês em que a venda ocorreu                                        | 1 a 31                                                        |
-| `Month_Name`         |                      | STRING              | Nome do mês da venda                                                     | "January" a "December"                                        |
-| `Year`               |                      | INT                 | Ano da venda                                                             | Ex: 2011 a 2016                                               |
-| `Customer_Age`       |                      | INT                 | Idade do cliente no momento da compra                                    | 10 a 100 (valores fora disso podem indicar erro)              |
-| `Customer_Gender`    |                      | STRING              | Gênero do cliente                                                        | "M" para homens e "F" para mulheres                           |
-| `Country`            |                      | STRING              | País onde a venda foi realizada                                          | Lista limitada (ex: "United States", "France", "Germany"...)  |
-| `State`              |                      | STRING              | Estado ou província da venda                                             | Compatível com o país correspondente                          |
-| `Product_Category`   |                      | STRING              | Categoria do produto vendido                                             | "Bikes", "Clothing", "Accessories"                            |
-| `Sub_Category`       |                      | STRING              | Subcategoria do produto                                                  | Ex: "Mountain Bikes", "Socks", "Helmets"                      |
-| `Product`            |                      | STRING              | Nome do produto                                                          | Nome único por item vendido                                   |
-| `Order_Quantity`     |                      | INT                 | Quantidade de unidades vendidas                                          | ≥ 1 (quantidade positiva e plausível)                         |
-| `Unit_Cost`          |                      | FLOAT / DECIMAL     | Custo unitário do produto                                                | > 0                                                           |
-| `Unit_Price`         |                      | FLOAT / DECIMAL     | Preço de venda unitário                                                  | > 0                                                           |
-| `Profit`             |                      | FLOAT / DECIMAL     | Lucro total da venda                                                     | Pode ser positivo ou negativo                                 |
-| `Cost`               |                      | FLOAT / DECIMAL     | Custo total da venda (`Unit_Cost` * `Order_Quantity`)                    | > 0                                                           |
-| `Revenue`            |                      | FLOAT / DECIMAL     | Receita total da venda (`Unit_Price` * `Order_Quantity`)                 | ≥ 0                                                           |
-| `ID_Product`         |                      | BIGINT              | Identificador único do produto (chave primária em DimProducts)           | Autoincremento, valor único                                   |
-| `ID_Customer`        |                      | BIGINT              | Identificador único do cliente (chave primária em DimCustomers)          | Autoincremento, valor único                                   |
-| `ID_Region`          |                      | BIGINT              | Identificador único da região (chave primária em DimRegion)              | Autoincremento, valor único                                   |
-| `ID_Region_Customer` |                      | BIGINT              | Identificador único da combinação região-cliente                         | Autoincremento, valor único                                   ||
-
+| Coluna               | Tabela                                        | Tipo de Dado        | Descrição                                                                | Valores/Intervalos Esperados                                  |
+|----------------------|-----------------------------------------------|---------------------|--------------------------------------------------------------------------|---------------------------------------------------------------|
+| `Sale_Date`          | Fact_Sales                                    | DATE (yyyy-MM-dd)   | Data completa da venda                                                   | Dentro do intervalo de anos válidos; sem datas futuras        |
+| `Day`                | -                                             | INT                 | Dia do mês em que a venda ocorreu                                        | 1 a 31                                                        |
+| `Month_Name`         | -                                             | STRING              | Nome do mês da venda                                                     | "January" a "December"                                        |
+| `Year`               | -                                             | INT                 | Ano da venda                                                             | Ex: 2011 a 2016                                               |
+| `Customer_Age`       | DimCustomers                                  | INT                 | Idade do cliente no momento da compra                                    | 10 a 100 (valores fora disso podem indicar erro)              |
+| `Customer_Gender`    | DimCustomers                                  | STRING              | Gênero do cliente                                                        | "M" para homens e "F" para mulheres                           |
+| `Country`            | DimRegion                                     | STRING              | País onde a venda foi realizada                                          | Lista limitada (ex: "United States", "France", "Germany"...)  |
+| `State`              | DimRegion                                     | STRING              | Estado ou província da venda                                             | Compatível com o país correspondente                          |
+| `Product_Category`   | DimProducts                                   | STRING              | Categoria do produto vendido                                             | "Bikes", "Clothing", "Accessories"                            |
+| `Sub_Category`       | DimProducts                                   | STRING              | Subcategoria do produto                                                  | Ex: "Mountain Bikes", "Socks", "Helmets"                      |
+| `Product`            | DimProducts                                   | STRING              | Nome do produto                                                          | Nome único por item vendido                                   |
+| `Order_Quantity`     | Fact_Sales                                    | INT                 | Quantidade de unidades vendidas                                          | ≥ 1 (quantidade positiva e plausível)                         |
+| `Unit_Cost`          | Fact_Sales                                    | FLOAT / DECIMAL     | Custo unitário do produto                                                | > 0                                                           |
+| `Unit_Price`         | Fact_Sales                                    | FLOAT / DECIMAL     | Preço de venda unitário                                                  | > 0                                                           |
+| `Profit`             | Fact_Sales                                    | FLOAT / DECIMAL     | Lucro total da venda                                                     | Pode ser positivo ou negativo                                 |
+| `Cost`               | Fact_Sales                                    | FLOAT / DECIMAL     | Custo total da venda (`Unit_Cost` * `Order_Quantity`)                    | > 0                                                           |
+| `Revenue`            | Fact_Sales                                    | FLOAT / DECIMAL     | Receita total da venda (`Unit_Price` * `Order_Quantity`)                 | ≥ 0                                                           |
+| `ID_Product`         | Fact_Sales, DimProducts                       | BIGINT              | Identificador único do produto (chave primária em DimProducts)           | Autoincremento, valor único                                   |
+| `ID_Customer`        | Fact_Sales, DimCustomers, DimRegion_Customers | BIGINT              | Identificador único do cliente (chave primária em DimCustomers)          | Autoincremento, valor único                                   |
+| `ID_Region`          | DimCustomer, DimRegion_Customers              | BIGINT              | Identificador único da região (chave primária em DimRegion)              | Autoincremento, valor único                                   |
 
 ## 4. Modelagem de dados
+A modelagem dos dados foi feita pensando na usabilidade final dos dados, ou seja, além de realizar as análises via SQL no databricks, deixar as tabelas corretamente disponíveis para consumo de plataformas externas de BI e análise de dados.
 
 O modelo de dados definido para o problema foi o **SnowFlake**. Essa escolha se deu principalmente para evitar a repetição desnecessária de dados e manter a integridade, facilidade de manutenção e a escalabilidade, pensando que esses dados tendem a crescer com o tempo, tanto em dados históricos mas também em número de produtos e regiões.
 
