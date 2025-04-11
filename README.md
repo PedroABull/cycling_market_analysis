@@ -1,5 +1,4 @@
 [![author](https://img.shields.io/badge/Author-PedroBull-red.svg)](https://www.linkedin.com/in/pedro-bull-0363ba1a1/)
-[![](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
 
 # Engenharia de Dados Aplicada: Vendas e Perfil de Clientes no Mercado de Ciclismo
 
@@ -138,3 +137,8 @@ Apesar de as bicicletas representarem a maior fatia do faturamento total, sua ma
 
 4. Quais países representam os maiores mercados para a empresa?
 Embora os maiores volumes de faturamento estejam atualmente concentrados em países como Estados Unidos e Austrália, há uma sub-representação na Europa, que é o principal mercado global do ciclismo. Isso aponta para uma grande oportunidade de expansão no continente europeu.
+
+### 7.1 Autoavaliação e próximos passos
+Apesar de já ter certa familiaridade com os conceitos de engenharia de dados e, principalmente, com a linguagem SQL, esse MVP me proporcionou aprendizados relevantes na construção de pipelines de dados e sobre trabalhar em plataformas de nuvem como o databricks. De modo geral, o objetivo definido ao incício do trabalho que foi aplicar os conceitos de engenharia de dados para entender o mercado da bicicleta foi cumprido com sucesso. Os *insights* levantados sobre o os perfis de compra dos clientes e sobre impactos financeiros de cada grupo de produtos impõe à empresa são bastante relevantes, principalmente em um cenário em que a empresa está planejando investir em uma expansão de portifólio ou de área de atuação.
+
+Como próximo passo para esse projeto, é interessante substituir os dados de uma empresa por dados mais abrangentes de mercado total, ou inclusive agregar esses novos dados ao modelo já construído aqui para que se tenha uma panorama mais abrangente do comportamento do mercado da bike ao redor do mundo. Além disso, como sequência desse projeto também serão aplicas as técnicas aprendidas na disciplina de **Machine Learing** para criar métodologias de previsão de demanda e vendas. Dessa forma, é possível construir uma solução completa que agregue tanto análise de dados históricos quando previsões futuras. 
