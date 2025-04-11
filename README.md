@@ -73,28 +73,19 @@ Para o catálogo de dados, foram consideradas todos os atributos envolvidos no m
 | `ID_Region`          | DimCustomer, DimRegion_Customers              | BIGINT              | Identificador único da região (chave primária em DimRegion)              | Autoincremento, valor único                                   |
 
 ## 4. Modelagem de dados
-A modelagem dos dados foi feita pensando na usabilidade final dos dados, ou seja, além de realizar as análises via SQL no databricks, deixar as tabelas corretamente disponíveis para consumo de plataformas externas de BI e análise de dados.
+O modelo de dados definido para o problema foi o **SnowFlake**. Essa escolha se deu principalmente para evitar a repetição desnecessária de dados e manter a integridade, facilidade de manutenção e a escalabilidade, pensando que esses dados tendem a crescer com o tempo, tanto em dados históricos mas também em número de produtos e regiões. Além disso, apesar de envolver mais joins que um modelo em estrela, o **SnowFlake** é eficiente em ambientes de Data Warehouse modernos, como o Databricks, que são otimizados para trabalhar com tabelas normalizadas e grandes volumes de dados.
 
-O modelo de dados definido para o problema foi o **SnowFlake**. Essa escolha se deu principalmente para evitar a repetição desnecessária de dados e manter a integridade, facilidade de manutenção e a escalabilidade, pensando que esses dados tendem a crescer com o tempo, tanto em dados históricos mas também em número de produtos e regiões.
+O primeiro passo foi desenvolver a modelagem conceitual dos dados definindo a dinâmica de relacionamento das diferentes informações contidas na base de dados original. Uma particularidade desse modelo é que as informações de clientes que realizaram compra encontram-se agrupadas, ou seja, a granularidade máxima desses atributos é dada como grupos de clientes por idade e por sexo. Sendo assim, uma cidade pode conter 1 ou n grupos de clientes, assim como um grupo de clientes pode estar em uma ou n cidades. 
 
-O primeiro passo foi desenvolver a modelagem conceitual dos dados definindo a dinâmica de relacionamento das diferentes informações contidas na base de dados original. Para esse caso em específico, as informações de clientes que realizaram compra encontram-se agrupadas, ou seja, a granularidade máxima desses atributos é dada como grupos de clientes por idade e por sexo. Sendo assim, uma cidade pode conter 1 ou n grupos de clientes, assim como um grupo de clientes pode estar em uma ou n cidades. Por esse motivo, foi adotada uma abordagem alternativa ao modelo Snowflake tradicional, com a introdução da tabela intermediária **DimRegion_Customers**, que permite manter a consistência dos relacionamentos e garantir flexibilidade para análises futuras.
+Em seguida, foi feita a modelagem lógica das entidades e relacionamentos, onde foram definidas quais as colunas devem estar contidas em cada tabela e quais são as chaves primárias e extrangeiras para cruzar as informações, conforme diagrama abaixo. 
 
-![modelo_conceitual](images/modelo_conceitual.png)
-
-O segundo passo foi eliminar os relacionamentos **n:n** do modelo, incluindo a tabela fato de vendas e uma tabela de relacionamento entre as entidades de Região e Grupo_Cliente, conforme descrito na etapa anterior.
-
-![eliminando_nxn](images/eliminando_nxn.png)
-
-O terceiro e último passo foi a modelagem lógica das entidades e relacionamentos, onde foram definidas quais as colunas devem estar contidas em cada tabela e quais são as chaves primárias e extrangeiras para cruzar as informações.
-
-![modelo_logico](images/modelo_logicov2.png)
+![modelo_logico](images/modelo_logico.png)
 
 Por fim, foram definidas as seguintas tabelas para a camada gold do Data Warehouse:
   - **FactSales**: Tabela fato de vendas 
   - **DimProducts**: Tabela dimensão de produtos
   - **DimCustomers**: Tabela dimensão de clientes
   - **DimRegion**: Tabela dimensão de regiões de venda
-  - **DimRegion_Customer**: Tabela contendo todas as combinações de ID_Region e ID_Customer, chaves primárias das tabelas **DimRegion** e **DimCustomers**, respectivamente.
 
 ## 5. Carga de dados e ETL
 
