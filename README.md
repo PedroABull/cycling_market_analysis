@@ -96,7 +96,6 @@ A etapa de Carga compõe a carga dos dados para o Data Warehouse e o processo de
 - Compatibilidade dos tipos de dados por coluna
 - Verificação de Duplicatas
 - Verificação de Nulos
-- Renomeação de colunas
 
 **Camada gold**: nessa camada foram salvos os dados consolidados, agregados e modelados para consumo analítico, como já detalhado no tópico **Modelagem de Dados**.
 
